@@ -1,5 +1,6 @@
 //bit manipulation le nombre de 1 dans un nombre de 32 bit 
 //4ms 7.90mb 
+//time and espace complexity O(1)
 int hammingWeight(int n) {
     uint32_t bit = n, res = 0;
     int count = 0;
