@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+//plus mauvais en temps que mon code original
 
 // Définition de la structure ListNode
 struct ListNode {
