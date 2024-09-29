@@ -51,3 +51,36 @@ bool isPalindrome(struct ListNode* head) {
 
     return true;
 }
+//code complementaire sur une solution reutilisable 
+/*
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+bool isPalindrome(struct ListNode* head) {
+    if (head == NULL || head->next == NULL) {
+        return true;
+    }
+    struct ListNode *slow = head, *fast = head, *prev = NULL;
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    while (slow != NULL) {
+        struct ListNode* nextNode = slow->next;
+        slow->next = prev;
+        prev = slow;
+        slow = nextNode;
+    }
+    while (head != NULL && prev != NULL) {
+        if (head->val != prev->val) {
+            return false;
+        }
+        head = head->next;
+        prev = prev->next;
+    }
+    return true;
+}*/
