@@ -1,6 +1,7 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
+// my version of 8ms
 #define TRUE 1
 #define FALSE 0
 
@@ -43,4 +44,40 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
     }
     *returnSize = count;
     return array;
+}
+
+//version of this for 0 ms
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) {
+    // 用陣列模擬 HashSet
+    bool set1[1001] = {false};  // 記錄 nums1 中出現的數字
+    bool set2[1001] = {false};  // 記錄 nums2 中出現的數字
+    
+    // 把 nums1 的數字加入 set1
+    for(int i = 0; i < nums1Size; i++) {
+        set1[nums1[i]] = true;
+    }
+    
+    // 找交集並加入 set2
+    int count = 0;
+    for(int i = 0; i < nums2Size; i++) {
+        if(set1[nums2[i]] && !set2[nums2[i]]) {
+            set2[nums2[i]] = true;
+            count++;
+        }
+    }
+    
+    // 建立結果數組
+    int* result = (int*)malloc(count * sizeof(int));
+    int idx = 0;
+    for(int i = 0; i < 1001; i++) {
+        if(set2[i]) {
+            result[idx++] = i;
+        }
+    }
+    
+    *returnSize = count;
+    return result;
 }
