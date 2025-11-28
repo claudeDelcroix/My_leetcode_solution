@@ -77,3 +77,73 @@ bool backspaceCompare(char* s, char* t) {
     free(st.data);
     return result;
 }
+
+
+//methode des deux pointeurs 
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool backspaceCompare(const char* s, const char* t) {
+    int i = strlen(s) - 1;  // pointeur pour s
+    int j = strlen(t) - 1;  // pointeur pour t
+
+    int skipS = 0;  // nombre de caractères à sauter dans s
+    int skipT = 0;  // nombre de caractères à sauter dans t
+
+    // parcourir tant qu'il reste un caractère dans au moins une chaîne
+    while (i >= 0 || j >= 0) {
+
+        // --- Avancer dans s ---
+        while (i >= 0) {
+            if (s[i] == '#') {      // un backspace ?
+                skipS++;
+                i--;
+            }
+            else if (skipS > 0) {   // caractère à effacer
+                skipS--;
+                i--;
+            }
+            else {
+                break;              // caractère réel trouvé
+            }
+        }
+
+        // --- Avancer dans t ---
+        while (j >= 0) {
+            if (t[j] == '#') {
+                skipT++;
+                j--;
+            }
+            else if (skipT > 0) {
+                skipT--;
+                j--;
+            }
+            else {
+                break;
+            }
+        }
+
+        // Maintenant : soit on compare les caractères, soit les deux sont en dehors de la chaîne
+
+        // Si les deux pointeurs sont valides
+        if (i >= 0 && j >= 0) {
+            // caractères différents ?
+            if (s[i] != t[j]) {
+                return false;
+            }
+        }
+        else {
+            // Un seul est valide : longueurs finales différentes
+            if (i >= 0 || j >= 0) {
+                return false;
+            }
+        }
+
+        i--;
+        j--;
+    }
+
+    return true;
+}
+
